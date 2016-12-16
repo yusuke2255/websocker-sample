@@ -1,0 +1,18 @@
+version: '2'
+services:
+  chat-client:
+    build:
+      context: ./chat-client
+    volumes:
+     - ./nginx/conf.d:/usr/local/openresty/nginx/conf/conf.d
+     - ./nginx/nginx.conf:/usr/local/openresty/nginx/conf/nginx.conf:ro
+     - ./chat-client/dist:/webroot
+    links:
+     - chat-server:api
+    ports:
+     - 10080:80
+  chat-server:
+    build:
+      context: ./chat
+    ports:
+     - 8080
